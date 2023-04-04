@@ -46,3 +46,7 @@
 
 	--> Burp Suite Configuration for Android Applications and SSL Pinning Bypass.
 [![Burp Suite Configuration for Android Applications and SSL Pinning Bypass.](https://img.youtube.com/vi/1721lyUtfYY/0.jpg)](https://www.youtube.com/watch?v=1721lyUtfYY)
+
+
+	--> Root Android Studio Device with Magisk and Install Burp Certificate in System Certificate Store.
+[![Root Android Studio Device with Magisk and Install Burp Certificate in System Certificate Store.](https://img.youtube.com/vi/qQicUW0svB8/0.jpg)](https://www.youtube.com/watch?v=qQicUW0svB8)
