@@ -18,7 +18,7 @@ $ProgressPreference = 'SilentlyContinue'
 $jdk18 = Get-WmiObject -Class Win32_Product -filter "Vendor='Oracle Corporation'" |where Caption -clike "Java(TM) SE Development Kit 19*"
 if (!($jdk18)){
     echo "`t`tDownnloading Java JDK-19 ...."
-    wget "https://download.oracle.com/java/19/archive/jdk-19.0.2_windows-x64_bin.exe" -O jdk-19.exe    
+    wget "https://download.oracle.com/java/19/latest/jdk-19_windows-x64_bin.exe" -O jdk-19.exe    
     echo "`n`t`tJDK-19 Downloaded, lets start the Installation process"
     start -wait jdk-19.exe
     rm jdk-19.exe
@@ -41,22 +41,22 @@ if (!($jre8)){
 }
 
 # Downloading Burp Suite Professional
-if (Test-Path burpsuite_pro.jar){
+if (Test-Path Burp-Suite-Pro.jar){
     echo "Burp Suite Professional JAR file is available.`nChecking its Integrity ...."
-    if (((Get-Item burpsuite_pro.jar).length/1MB) -lt 400 ){
-        echo "`n`t`tFiles Seems to be corrupted `n`t`tDownloading Burp Suite Professional latest version ...."
-        wget "https://portswigger.net/burp/releases/startdownload?product=pro&version=&type=Jar" -O "burpsuite_pro.jar"
+    if (((Get-Item Burp-Suite-Pro.jar).length/1MB) -lt 500 ){
+        echo "`n`t`tFiles Seems to be corrupted `n`t`tDownloading Burp Suite Professional v2022.8.2 ...."
+        wget "https://portswigger.net/burp/releases/startdownload?product=pro&version=2022.8.2&type=Jar" -O "Burp-Suite-Pro.jar"
         echo "`nBurp Suite Professional is Downloaded.`n"
     }else {echo "File Looks fine. Lets proceed for Execution"}
 }else {
-    echo "`n`t`tDownloading Burp Suite Professional latest version ...."
-    wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=&type=jar" -O "burpsuite_pro.jar"
+    echo "`n`t`tDownloading Burp Suite Professional v2022.8.2 ...."
+    wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=2022.8.2&type=jar" -O "Burp-Suite-Pro.jar"
     echo "`nBurp Suite Professional is Downloaded.`n"
 }
 
 # Creating Burp.bat file with command for execution
 if (Test-Path burp.bat) {rm burp.bat} 
-$path = "java `"--add-opens=java.desktop/javax.swing=ALL-UNNAMED`" `"--add-opens=java.base/java.lang=ALL-UNNAMED`" `"--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED`" `"--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED`" `"--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED`" `"-javaagent:$(pwd)/New_loader.jar`" `"-noverify`" `"-jar`" `"$(pwd)/burpsuite_pro.jar`""
+$path = "java --add-opens=java.desktop/javax.swing=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED -javaagent:`"$pwd\loader.jar`" -noverify -jar `"$pwd\Burp-Suite-Pro.jar`""
 $path | add-content -path Burp.bat
 echo "`nBurp.bat file is created"
 
@@ -70,23 +70,20 @@ add-content Burp-Suite-Pro.vbs "Set WshShell = Nothing"
 echo "`nBurp-Suite-Pro.vbs file is created."
 
 # Remove Additional files
-if (Test-Path Kali_Linux_Setup.sh) {
-   rm Kali_Linux_Setup.sh
-   del -Recurse -Force .\.github\
-}
+rm Kali_Linux_Setup.sh
+del -Recurse -Force .\.github\
 
 
 # Lets Activate Burp Suite Professional with keygenerator and Keyloader
 echo "Reloading Environment Variables ...."
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
-echo "`n`nExecuting Keygenerator ...."
-start-process java.exe -argumentlist "-jar New_loader.jar"
+echo "`n`nStarting Keygenerator ...."
+start-process java.exe -argumentlist "-jar keygen.jar"
 echo "`n`nStarting Burp Suite Professional"
-java "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" "-javaagent:$(pwd)/New_loader.jar" "-noverify" "-jar" "$(pwd)/burpsuite_pro.jar"
+java --add-opens=java.desktop/javax.swing=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED -javaagent:"loader.jar" -noverify -jar "Burp-Suite-Pro.jar"
 
 
 # Lets Download the latest Burp Suite Professional jar File
-echo "`n`t`t Follow below steps to update Burp Suite Professional :-:"
 echo "`n`t`t 1. Please download latest Burp Suite Professional Jar file from :-:"
 echo "`n`t`t https://portswigger.net/burp/releases/startdownload?product=pro&version=&type=Jar"
 echo "`n`t`t 2. Replace the existing Burp-Suite-Pro.jar file with downloaded jar file. `n`t Keep previous file name"
