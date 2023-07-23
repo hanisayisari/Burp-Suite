@@ -25,7 +25,7 @@ if [[ $EUID -eq 0 ]]; then
     
     # Execute Burp Suite Professional with Keyloader
     echo 'Executing Burp Suite Professional with Keyloader'
-    echo "java --illegal-access=permit -Dfile.encoding=utf-8 -javaagent:$(pwd)/New-loader.jar -noverify -jar $(pwd)/burpsuite_pro.jar &" > burp
+    echo "java "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" -javaagent:$(pwd)/New-loader.jar -noverify -jar $(pwd)/burpsuite_pro.jar &" > burp
     chmod +x burp
     cp burp /bin/burp 
     (./burp)
