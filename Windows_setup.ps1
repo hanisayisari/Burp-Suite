@@ -56,7 +56,7 @@ if (Test-Path burpsuite_pro.jar){
 
 # Creating Burp.bat file with command for execution
 if (Test-Path burp.bat) {rm burp.bat} 
-$path = "java "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" -javaagent:`"$pwd\New_loader.jar`" -noverify -jar `"$pwd\burpsuite_pro.jar`""
+$path = "java `"--add-opens=java.desktop/javax.swing=ALL-UNNAMED`" `"--add-opens=java.base/java.lang=ALL-UNNAMED`" `"--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED`" `"--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED`" `"--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED`" -javaagent:`"$pwd\New_loader.jar`" -noverify -jar `"$pwd\burpsuite_pro.jar`""
 $path | add-content -path Burp.bat
 echo "`nBurp.bat file is created"
 
@@ -70,8 +70,10 @@ add-content Burp-Suite-Pro.vbs "Set WshShell = Nothing"
 echo "`nBurp-Suite-Pro.vbs file is created."
 
 # Remove Additional files
-rm Kali_Linux_Setup.sh
-del -Recurse -Force .\.github\
+if (Test-Path Kali_Linux_Setup.sh) {
+   rm Kali_Linux_Setup.sh
+   del -Recurse -Force .\.github\
+}
 
 
 # Lets Activate Burp Suite Professional with keygenerator and Keyloader
