@@ -1,6 +1,6 @@
 #!/bin/bash
-
-echo '
+YELLOW=`tput setaf 3`
+echo '${YELLOW}
  .d8888b.          888b    888          .d8888b.          888       888         888b    888 
 d88P  Y88b         8888b   888         d88P  Y88b         888   o   888         8888b   888 
 Y88b.              88888b  888         888    888         888  d8b  888         88888b  888 
