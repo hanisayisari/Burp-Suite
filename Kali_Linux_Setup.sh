@@ -12,20 +12,20 @@ Y88b  d88P         888   Y8888         Y88b  d88P         8888P   Y8888         
 '
 
 if [[ $EUID -eq 0 ]]; then
-      # Download Burp Suite Profesional Latet Version
-      echo 'Downloading latest Burp Suite Professional'
-      Link="https://portswigger-cdn.net/burp/releases/download?product=pro&version=&type=jar"
-      wget "$Link" -O burpsuite_pro.jar --quiet --show-progress
-      sleep 2
+    # Download Burp Suite Profesional Latet Version
+    echo 'Downloading Burp Suite Professional v2022.8.2 ....'
+    Link="https://portswigger-cdn.net/burp/releases/download?product=pro&version=2022.8.2&type=jar"
+    wget "$Link" -O Burp_Suite_Pro.jar --quiet --show-progress
+    sleep 2
 
     # execute Keygenerator
     echo 'Starting Keygenerator'
-    (java -jar New-loader.jar) &
+    (java -jar keygen.jar) &
     sleep 3s
     
     # Execute Burp Suite Professional with Keyloader
     echo 'Executing Burp Suite Professional with Keyloader'
-    echo "java "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" -javaagent:$(pwd)/New-loader.jar -noverify -jar $(pwd)/burpsuite_pro.jar &" > burp
+    echo "java --illegal-access=permit -Dfile.encoding=utf-8 -javaagent:$(pwd)/loader.jar -noverify -jar $(pwd)/Burp_Suite_Pro.jar &" > burp
     chmod +x burp
     cp burp /bin/burp 
     (./burp)
@@ -35,7 +35,6 @@ else
 fi
 
 # Lets Download the latest Burp Suite Professional jar File
-echo "`n`t Follow Below Steps to Update Burp Suite Professional  :-:"
 echo "`n`t 1. Please download latest Burp Suite Professional Jar file from :-:"
 echo "`n`t https://portswigger.net/burp/releases/startdownload?product=pro&version=&type=Jar"
-echo "`n`t 2. Replace the existing burpsuite_pro.jar file with downloaded .jar file. `n`t Keep previous file name"
+echo "`n`t 2. Replace the existing Burp-Suite-Pro.jar file with downloaded jar file. `n`t Keep previous file name"
