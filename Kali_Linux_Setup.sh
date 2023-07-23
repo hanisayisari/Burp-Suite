@@ -13,7 +13,7 @@ Y88b  d88P         888   Y8888         Y88b  d88P         8888P   Y8888         
 
 if [[ $EUID -eq 0 ]]; then
       # Download Burp Suite Profesional Latet Version
-      echo 'Downloading Burp Suite Professional v2022.8.2 ....'
+      echo 'Downloading latest Burp Suite Professional'
       Link="https://portswigger-cdn.net/burp/releases/download?product=pro&version=&type=jar"
       wget "$Link" -O burpsuite_pro.jar --quiet --show-progress
       sleep 2
