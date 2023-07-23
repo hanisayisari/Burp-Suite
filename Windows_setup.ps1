@@ -41,9 +41,9 @@ if (!($jre8)){
 }
 
 # Downloading Burp Suite Professional
-if (Test-Path Burp-Suite-Pro.jar){
+if (Test-Path burpsuite_pro.jar){
     echo "Burp Suite Professional JAR file is available.`nChecking its Integrity ...."
-    if (((Get-Item Burp-Suite-Pro.jar).length/1MB) -lt 500 ){
+    if (((Get-Item burpsuite_pro.jar).length/1MB) -lt 400 ){
         echo "`n`t`tFiles Seems to be corrupted `n`t`tDownloading Burp Suite Professional latest version ...."
         wget "https://portswigger.net/burp/releases/startdownload?product=pro&version=&type=Jar" -O "burpsuite_pro.jar"
         echo "`nBurp Suite Professional is Downloaded.`n"
@@ -56,7 +56,7 @@ if (Test-Path Burp-Suite-Pro.jar){
 
 # Creating Burp.bat file with command for execution
 if (Test-Path burp.bat) {rm burp.bat} 
-$path = "java --add-opens=java.desktop/javax.swing=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED -javaagent:`"$pwd\New_loader.jar`" -noverify -jar `"$pwd\burpsuite_pro.jar`""
+$path = "java "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" -javaagent:`"$pwd\New_loader.jar`" -noverify -jar `"$pwd\burpsuite_pro.jar`""
 $path | add-content -path Burp.bat
 echo "`nBurp.bat file is created"
 
